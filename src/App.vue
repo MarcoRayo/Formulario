@@ -24,28 +24,31 @@ export default {
   },
   methods: {
     validateNombre() {
-      this.nombreState = this.nombre.length > 0 ? true : false;
+      this.nombreState = this.nombre.length > 0 || this.nombre != 'Nombre' ? true : false;
     },
     validateApellido() {
       this.apellidoState = this.apellido.length > 0 ? true : false;
     },
-    validateDireccion(){
-      this.cpState =this.cp.length > 0 ? true : false;
+    validateDireccion() {
+      this.cpState = this.cp.length > 0 ? true : false;
       this.calleState = this.calle.length > 0 ? true : false;
       this.numeroState = this.numero.length > 0 ? true : false;
       this.ciudadState = this.ciudad.length > 0 ? true : false;
     },
-    validateFecha(){
+    validateFecha() {
       //FECHA MAYOR DE 18
       this.fechaState = this.fecha.length != null ? true : false;
     },
-    validateEmail(){
+    validateEmail() {
       //VERIFICAR QUE SEA EMAIL
       this.emailState = this.email.length > 0 ? true : false;
     },
-    validateNumeroTel(){
+    validateNumeroTel() {
       //VERIFICAR QUE SEA EMAIL
       this.numeroTelState = this.numeroTel.length > 0 ? true : false;
+    },
+    chooseImage() {
+      this.$refs.fileInput.click()
     },
     handleSubmit() {
       if (this.nombreState == null) {
@@ -53,10 +56,11 @@ export default {
       } else {
         alert("Se mando")
       }
-
     },
+
   },
-};
+}
+
 </script>
 
 <template>
@@ -82,7 +86,7 @@ export default {
             <!--NOMBRE-->
             <div class="row col-md-12 mx-auto">
               <b-form-group label-for="input-nombre" :state="nombreState" style="padding-top: 2rem;">
-                <b-form-input id="input-nombre" v-model="nombre" :state="nombreState" @input="validateNombre"
+                <b-form-input id="input-nombre" v-model="nombre" :state="nombreState" @input="validateNombre()"
                   placeholder="Nombre"></b-form-input>
                 <b-form-invalid-feedback :state="nombreState">
                   El nombre es obligatorio.
@@ -121,7 +125,8 @@ export default {
                 </div>
                 <div class="col-md-2">
                   <!--NUMERO-->
-                  <b-form-input id="numero" v-model="numero" type="number" :state="numeroState" @input="validateDireccion" placeholder="#">
+                  <b-form-input id="numero" v-model="numero" type="number" :state="numeroState" @input="validateDireccion"
+                    placeholder="#">
                   </b-form-input>
                 </div>
                 <div class="col-md-3">
@@ -159,8 +164,8 @@ export default {
             <!--NUM-->
             <div class="row col-md-12 mx-auto">
               <b-form-group label-for="input-numero" :state="numeroTelState" style="padding-top: 1rem;">
-                <b-form-input id="input-numero" v-model="numeroTel" type="number" :state="numeroTelState" @input="validateNumeroTel"
-                  placeholder="Número Telefónico"></b-form-input>
+                <b-form-input id="input-numero" v-model="numeroTel" type="number" :state="numeroTelState"
+                  @input="validateNumeroTel" placeholder="Número Telefónico"></b-form-input>
                 <b-form-invalid-feedback :state="numeroTelState">
                   El número es obligatorio.
                 </b-form-invalid-feedback>
@@ -170,17 +175,15 @@ export default {
             <!--IMG-->
             <div class="row col-md-12 mx-auto">
               <b-form-group label-for="input-img" :state="imgState" style="padding-top: 1rem;">
-                <b-form-input id="input-img" v-model="img" type="image" :state="imgState" @input="validateImg"
-                  placeholder="IMG"></b-form-input>
-                <b-form-invalid-feedback :state="validateImg">
-                  El número es obligatorio.
-                </b-form-invalid-feedback>
+                <div class="image-input"  @click="chooseImage">                  
+                  <input class="file-input" ref="fileInput" type="file" @input="onSelectFile">
+                </div>                
               </b-form-group>
-            </div>
+            </div>                    
 
             <!--BOTON-->
-            <b-form-group>
-              <b-button type="submit">Enviar</b-button>
+            <b-form-group class="col-md-2 mx-auto" style="padding-top: 0.5rem;">
+              <b-button type="submit" class="btn btn-success">Enviar</b-button>
             </b-form-group>
           </b-form>
           <!--                            
